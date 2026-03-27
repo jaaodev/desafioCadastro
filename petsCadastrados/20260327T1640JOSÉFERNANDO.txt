@@ -1,0 +1,7 @@
+1 - José Fernando
+2 - CACHORRO
+3 - MASCULINO
+4 - 130, Rio de Janeiro, Rua da Independencia
+5 - 8 anos
+6 - 14kg
+7 - Buldogue

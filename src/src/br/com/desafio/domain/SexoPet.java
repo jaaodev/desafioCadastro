@@ -1,6 +1,5 @@
 package br.com.desafio.domain;
 
-import br.com.desafio.Exception.NumeroInvalidoException;
 import br.com.desafio.Exception.OpcaoInvalidaException;
 
 public enum SexoPet {

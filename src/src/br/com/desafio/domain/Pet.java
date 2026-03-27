@@ -1,14 +1,17 @@
 package br.com.desafio.domain;
 
+import java.time.LocalDateTime;
+
 public class Pet {
     private String nome;
     private TipoPet tipo;
     private SexoPet sexo;
     private String enderecoBairro;
-    private double idade;
-    private double peso;
+    private String idade;
+    private String peso;
     private String raca;
-    private static final String semResposta = "NÃO INFORMADO";
+    private final String NAO_INFORMADO = "NÃO INFORMADO";
+    LocalDateTime dataCadastro;
 
     public Pet() {
     }
@@ -17,7 +20,7 @@ public class Pet {
         this.nome = nome;
     }
 
-    public Pet(String nome, TipoPet tipo, SexoPet sexo, String enderecoBairro, double idade, double peso, String raca) {
+    public Pet(String nome, TipoPet tipo, SexoPet sexo, String enderecoBairro, String  idade, String peso, String raca) {
         this.nome = nome;
         this.tipo = tipo;
         this.sexo = sexo;
@@ -59,19 +62,19 @@ public class Pet {
         this.enderecoBairro = enderecoBairro;
     }
 
-    public double getIdade() {
+    public String getIdade() {
         return idade;
     }
 
-    public void setIdade(double idade) {
+    public void setIdade(String idade) {
         this.idade = idade;
     }
 
-    public double getPeso() {
+    public String getPeso() {
         return peso;
     }
 
-    public void setPeso(double peso) {
+    public void setPeso(String peso) {
         this.peso = peso;
     }
 
@@ -81,5 +84,17 @@ public class Pet {
 
     public void setRaca(String raca) {
         this.raca = raca;
+    }
+
+    public String getNAO_INFORMADO() {
+        return NAO_INFORMADO;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 }

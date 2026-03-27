@@ -1,7 +1,5 @@
 package br.com.desafio.app;
 
-import br.com.desafio.Exception.NumeroInvalidoException;
-
 public class MenuInicial {
     public void imprimirMenu() {
         System.out.println("\n1.Cadastrar um novo pet");
