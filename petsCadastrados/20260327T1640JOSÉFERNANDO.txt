@@ -2,6 +2,7 @@
 2 - CACHORRO
 3 - MASCULINO
 4 - 130, Rio de Janeiro, Rua da Independencia
-5 - 8 anos
-6 - 14kg
+5 - 8
+6 - 11
 7 - Buldogue
+8 - 20260327T1640

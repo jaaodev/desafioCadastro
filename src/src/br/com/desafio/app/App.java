@@ -234,8 +234,8 @@ public class App {
                     boolean buscouPorIdade = idade2 != null;
                     boolean buscouPorPeso = peso2 != null;
                     boolean buscouPorRaca = raca2 != null;
-                    for (int i=0; i<listaDeBusca.size(); i++){
-                        int soma = 1+i;
+                    for (int i = 0; i < listaDeBusca.size(); i++) {
+                        int soma = 1 + i;
                         String nomeFormatado = buscouPorNome ?
                                 "\033[1m" + listaDeBusca.get(i).getNome() + "\033[0m" : listaDeBusca.get(i).getNome();
                         String sexoFormatado = buscouPorSexo ?
@@ -255,10 +255,59 @@ public class App {
                                 + "\033[1m" + listaDeBusca.get(i).getTipo() + "\033[0m" + " - "
                                 + sexoFormatado + " - "
                                 + enderecoFormatado + " - "
-                                + idadeFormatado + " - "
-                                + pesoFormatado + " - "
+                                + idadeFormatado + " anos" + " - "
+                                + pesoFormatado + "kg" + " - "
                                 + racaFormatado);
                     }
+
+                    System.out.print("\nDigite o número do pet que você deseja alterar um atributo: ");
+                    int numeroPet = sc.nextInt();
+                    sc.nextLine();
+                    try {
+                        Pet petSelecionado = listaDeBusca.get(numeroPet - 1);
+                        System.out.println("1. Alterar o nome");
+                        System.out.println("2. Alterar o endereço");
+                        System.out.println("3. Alterar a idade");
+                        System.out.println("4. Alterar o peso");
+                        System.out.println("5. Alterar a raça");
+                        System.out.print("Digite o atributo que deseja alterar: ");
+                        int opcaoAtributo = sc.nextInt();
+                        sc.nextLine();
+                        switch (opcaoAtributo) {
+                            case 1:
+                                System.out.print("Digite o novo nome: ");
+                                petSelecionado.setNome(sc.nextLine());
+                                System.out.println("Nome alterado com sucesso!");
+                                break;
+                            case 2:
+                                System.out.print("Digite o novo Endereço: ");
+                                petSelecionado.setEnderecoBairro(sc.nextLine());
+                                System.out.println("Endereço alterado com sucesso!");
+                                break;
+                            case 3:
+                                System.out.print("Digite a nova idade: ");
+                                petSelecionado.setIdade(sc.nextLine());
+                                System.out.println("Idade alterada com sucesso!");
+                                break;
+                            case 4:
+                                System.out.print("Digite o novo peso: ");
+                                petSelecionado.setPeso(sc.nextLine());
+                                System.out.println("Peso alterado com sucesso!");
+                                break;
+                            case 5:
+                                System.out.print("Digite a nova raça: ");
+                                petSelecionado.setRaca(sc.nextLine());
+                                System.out.println("Raça alterada com sucesso!");
+                                break;
+                        } repositorio.atualizarPet(petSelecionado);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Número inválido, escolha um número da lista!");
+                        continue;
+                    }
+                    break;
+                case 3:
+
+                    break;
             }
         } while (opcao != 6);
 

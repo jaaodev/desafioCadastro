@@ -12,7 +12,7 @@ import java.util.List;
 
 public class PetRepositorio {
     public void salvarPet(Pet pet) {
-        LocalDateTime data = LocalDateTime.now();
+        LocalDateTime data = pet.getDataCadastro();
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmm");
         String nome = pet.getNome().replace(" ","").toUpperCase();
         File folderDiretorio = new File("C:\\projetos\\desafioCadastro\\petsCadastrados");
@@ -40,9 +40,9 @@ public class PetRepositorio {
                 bw.newLine();
                 bw.write("4 - " + pet.getEnderecoBairro());
                 bw.newLine();
-                bw.write("5 - " + pet.getIdade() + " anos");
+                bw.write("5 - " + pet.getIdade());
                 bw.newLine();
-                bw.write("6 - " + pet.getPeso() + "kg");
+                bw.write("6 - " + pet.getPeso());
                 bw.newLine();
                 bw.write("7 - " + pet.getRaca());
                 bw.newLine();
@@ -54,7 +54,6 @@ public class PetRepositorio {
     }
 
    public List<Pet> carregarPets() {
-       LocalDateTime data = LocalDateTime.now();
        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmm");
        File folderDiretorio = new File("C:\\projetos\\desafioCadastro\\petsCadastrados");
        File[] arquivos = folderDiretorio.listFiles();
@@ -86,6 +85,16 @@ public class PetRepositorio {
                e.printStackTrace();
            }
        }return pets;
+   }
+
+   public void atualizarPet(Pet pet) {
+       DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmm");
+       File folderDiretorio = new File("C:\\projetos\\desafioCadastro\\petsCadastrados");
+       String nome = pet.getNome().replace(" ", "").toUpperCase();
+       String nomeArquivo = pet.getDataCadastro().format(formatador) + nome + ".txt";
+       File arquivo = new File(folderDiretorio, nomeArquivo);
+       arquivo.delete();
+       salvarPet(pet);
    }
 
 }

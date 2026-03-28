@@ -2,7 +2,7 @@
 2 - CACHORRO
 3 - MASCULINO
 4 - 2222, Sao Vicente, Rua das Ostras
-5 - 7 anos
-6 - 8kg
+5 - 7
+6 - 8
 7 - Pitbull
 8 - 20260327T1205
