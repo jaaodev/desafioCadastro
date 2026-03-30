@@ -56,7 +56,21 @@ public class PetManager {
     }
 
     public void carregarPets(List<Pet> petsSalvos) {
+        pets.clear();
         pets.addAll(petsSalvos);
+    }
+
+    public void listarPets() {
+        System.out.println("     Lista de pets cadastrados:    ");
+        for (Pet p : pets) {
+            System.out.printf(p.getNome()+" - "
+                    +p.getTipo()+" - "
+                    +p.getSexo()+" - "
+                    +p.getEnderecoBairro()+" - "
+                    +p.getIdade()+" anos - "
+                    +p.getPeso()+" kg - "
+                    +p.getRaca()+"\n");
+        }
     }
 
     public void validarNome(String nome) throws NomeInvalidoException {

@@ -87,14 +87,32 @@ public class PetRepositorio {
        }return pets;
    }
 
-   public void atualizarPet(Pet pet) {
+   public void atualizarPet(Pet pet, String nomeAntigo) {
+       boolean deletou = deletarPet(pet, nomeAntigo);
+
+       if (!deletou) {
+           System.out.println("Não foi possível atualizar o pet.");
+           return;
+       }
+
+       salvarPet(pet);
+   }
+
+   public boolean deletarPet(Pet pet, String nomeAntigo) {
        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmm");
        File folderDiretorio = new File("C:\\projetos\\desafioCadastro\\petsCadastrados");
-       String nome = pet.getNome().replace(" ", "").toUpperCase();
-       String nomeArquivo = pet.getDataCadastro().format(formatador) + nome + ".txt";
-       File arquivo = new File(folderDiretorio, nomeArquivo);
-       arquivo.delete();
-       salvarPet(pet);
+
+       String nomeArquivoAntigo = pet.getDataCadastro().format(formatador) + nomeAntigo.replace(" ","").toUpperCase() + ".txt";
+       File arquivoAntigo = new File(folderDiretorio, nomeArquivoAntigo);
+
+       if (arquivoAntigo.exists()) {
+           boolean deletou = arquivoAntigo.delete();
+           if (!deletou) {
+               System.out.println("Não foi possível atualizar o arquivo do pet.");
+               return false;
+           }
+       }
+       return true;
    }
 
 }

@@ -1,8 +1,0 @@
-1 - Maria Chiquinha
-2 - CACHORRO
-3 - FEMININO
-4 - 122, Sao Paulo, Rua Quatro
-5 - 0.6
-6 - 8
-7 - Siames
-8 - 20260327T1726

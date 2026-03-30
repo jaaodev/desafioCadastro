@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) {
+    static void main(String[] args) {
 
         PetRepositorio repositorio = new PetRepositorio();
         PetManager pm = new PetManager();
@@ -40,6 +40,7 @@ public class App {
             }
             switch (opcao) {
                 case 1:
+
                     try (FileReader fr = new FileReader("C:\\projetos\\desafioCadastro\\fomulario.txt");
                          BufferedReader br = new BufferedReader(fr)) {
                         String linha;
@@ -109,7 +110,6 @@ public class App {
                     String idade = sc.nextLine();
                     if (idade.isEmpty()) {
                         pet.setIdade(pet.getNAO_INFORMADO());
-                        System.out.println("Idade: " + pet.getIdade());
                     } else {
                         System.out.print("A idade é em anos (1) ou meses (2)? ");
                         int opcaoIdade = sc.nextInt();
@@ -170,147 +170,176 @@ public class App {
                         System.out.println(e.getMessage());
                     }
                     break;
+
                 case 2:
-                    System.out.print("Para buscar por um pet, digite o tipo (Gato 1/Cachorro 2): ");
-                    TipoPet tipo2 = null;
-                    try {
-                        tipo2 = TipoPet.tipoPet(sc.nextInt());
-                    } catch (OpcaoInvalidaException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.println("1 - Nome ou sobrenome");
-                    System.out.println("2 - Sexo");
-                    System.out.println("3 - Endereço");
-                    System.out.println("4 - Idade");
-                    System.out.println("5 - Peso");
-                    System.out.println("6 - Raça");
-                    System.out.println("0 - Nenhuma das opções");
-                    System.out.println("Gostaria de adicionar um segundo critério?");
-                    System.out.print("Se sim digite a opção: ");
-                    int opcaoDeBusca = sc.nextInt();
-                    sc.nextLine();
 
-                    String nome2 = null;
-                    SexoPet sexo2 = null;
-                    String endereco2 = null;
-                    String idade2 = null;
-                    String peso2 = null;
-                    String raca2 = null;
-
-                    switch (opcaoDeBusca) {
-                        case 1:
-                            System.out.print("Digite o nome: ");
-                            nome2 = sc.nextLine();
-                            break;
-                        case 2:
-                            System.out.print("Digite o sexo (M / F): ");
-                            try {
-                                sexo2 = SexoPet.sexoPet(sc.next().charAt(0));
-                            } catch (OpcaoInvalidaException e) {
-                                System.out.println(e.getMessage());
-                            }
-                            break;
-                        case 3:
-                            System.out.print("Digite o endereço: ");
-                            endereco2 = sc.nextLine();
-                            break;
-                        case 4:
-                            System.out.print("Digite a idade: ");
-                            idade2 = sc.nextLine();
-                            break;
-                        case 5:
-                            System.out.print("Digite o peso: ");
-                            peso2 = sc.nextLine();
-                            break;
-                        case 6:
-                            System.out.print("Digite a raça: ");
-                            raca2 = sc.nextLine();
-                            break;
-                    }
-                    List<Pet> listaDeBusca = pm.buscarPet(nome2, tipo2, sexo2, endereco2, idade2, peso2, raca2);
-                    boolean buscouPorNome = nome2 != null;
-                    boolean buscouPorSexo = sexo2 != null;
-                    boolean buscouPorEndereco = endereco2 != null;
-                    boolean buscouPorIdade = idade2 != null;
-                    boolean buscouPorPeso = peso2 != null;
-                    boolean buscouPorRaca = raca2 != null;
-                    for (int i = 0; i < listaDeBusca.size(); i++) {
-                        int soma = 1 + i;
-                        String nomeFormatado = buscouPorNome ?
-                                "\033[1m" + listaDeBusca.get(i).getNome() + "\033[0m" : listaDeBusca.get(i).getNome();
-                        String sexoFormatado = buscouPorSexo ?
-                                "\033[1m" + listaDeBusca.get(i).getSexo() + "\033[0m" : String.valueOf(listaDeBusca.get(i).getSexo());
-                        String enderecoFormatado = buscouPorEndereco ?
-                                "\033[1m" + listaDeBusca.get(i).getEnderecoBairro() + "\033[0m" : listaDeBusca.get(i).getEnderecoBairro();
-                        String idadeFormatado = buscouPorIdade ?
-                                "\033[1m" + listaDeBusca.get(i).getIdade() + "\033[0m" : listaDeBusca.get(i).getIdade();
-                        String pesoFormatado = buscouPorPeso ?
-                                "\033[1m" + listaDeBusca.get(i).getPeso() + "\033[0m" : listaDeBusca.get(i).getPeso();
-                        String racaFormatado = buscouPorRaca ?
-                                "\033[1m" + listaDeBusca.get(i).getRaca() + "\033[0m" : listaDeBusca.get(i).getRaca();
-
-
-                        System.out.println(soma + ". "
-                                + nomeFormatado + " - "
-                                + "\033[1m" + listaDeBusca.get(i).getTipo() + "\033[0m" + " - "
-                                + sexoFormatado + " - "
-                                + enderecoFormatado + " - "
-                                + idadeFormatado + " anos" + " - "
-                                + pesoFormatado + "kg" + " - "
-                                + racaFormatado);
-                    }
-
-                    System.out.print("\nDigite o número do pet que você deseja alterar um atributo: ");
+                    List<Pet> petEncontrado = realizarBusca(pm, sc);
                     int numeroPet = sc.nextInt();
                     sc.nextLine();
-                    try {
-                        Pet petSelecionado = listaDeBusca.get(numeroPet - 1);
-                        System.out.println("1. Alterar o nome");
-                        System.out.println("2. Alterar o endereço");
-                        System.out.println("3. Alterar a idade");
-                        System.out.println("4. Alterar o peso");
-                        System.out.println("5. Alterar a raça");
-                        System.out.print("Digite o atributo que deseja alterar: ");
-                        int opcaoAtributo = sc.nextInt();
-                        sc.nextLine();
-                        switch (opcaoAtributo) {
-                            case 1:
-                                System.out.print("Digite o novo nome: ");
-                                petSelecionado.setNome(sc.nextLine());
-                                System.out.println("Nome alterado com sucesso!");
-                                break;
-                            case 2:
-                                System.out.print("Digite o novo Endereço: ");
-                                petSelecionado.setEnderecoBairro(sc.nextLine());
-                                System.out.println("Endereço alterado com sucesso!");
-                                break;
-                            case 3:
-                                System.out.print("Digite a nova idade: ");
-                                petSelecionado.setIdade(sc.nextLine());
-                                System.out.println("Idade alterada com sucesso!");
-                                break;
-                            case 4:
-                                System.out.print("Digite o novo peso: ");
-                                petSelecionado.setPeso(sc.nextLine());
-                                System.out.println("Peso alterado com sucesso!");
-                                break;
-                            case 5:
-                                System.out.print("Digite a nova raça: ");
-                                petSelecionado.setRaca(sc.nextLine());
-                                System.out.println("Raça alterada com sucesso!");
-                                break;
-                        } repositorio.atualizarPet(petSelecionado);
-                    } catch (IndexOutOfBoundsException e) {
-                        System.out.println("Número inválido, escolha um número da lista!");
-                        continue;
+                    Pet petSelecionado = petEncontrado.get(numeroPet - 1);
+                    String nomeAntigo = petSelecionado.getNome();
+                    System.out.print("\nDigite o número do pet que você deseja alterar um atributo: ");
+                    System.out.println("1. Alterar o nome");
+                    System.out.println("2. Alterar o endereço");
+                    System.out.println("3. Alterar a idade");
+                    System.out.println("4. Alterar o peso");
+                    System.out.println("5. Alterar a raça");
+                    System.out.print("Digite o atributo que deseja alterar: ");
+                    int opcaoAtributo = sc.nextInt();
+                    sc.nextLine();
+                    switch (opcaoAtributo) {
+                        case 1:
+                            System.out.print("Digite o novo nome: ");
+                            petSelecionado.setNome(sc.nextLine());
+                            System.out.println("Nome alterado com sucesso!");
+                            break;
+                        case 2:
+                            System.out.print("Digite o novo Endereço: ");
+                            petSelecionado.setEnderecoBairro(sc.nextLine());
+                            System.out.println("Endereço alterado com sucesso!");
+                            break;
+                        case 3:
+                            System.out.print("Digite a nova idade: ");
+                            petSelecionado.setIdade(sc.nextLine());
+                            System.out.println("Idade alterada com sucesso!");
+                            break;
+                        case 4:
+                            System.out.print("Digite o novo peso: ");
+                            petSelecionado.setPeso(sc.nextLine());
+                            System.out.println("Peso alterado com sucesso!");
+                            break;
+                        case 5:
+                            System.out.print("Digite a nova raça: ");
+                            petSelecionado.setRaca(sc.nextLine());
+                            System.out.println("Raça alterada com sucesso!");
+                            break;
                     }
+                    repositorio.atualizarPet(petSelecionado, nomeAntigo);
+
                     break;
                 case 3:
 
+                    List<Pet> petEncontrado3 = realizarBusca(pm, sc);
+                    System.out.print("\nDigite o número do pet que você deseja deletar: ");
+                    int numeroPet3 = sc.nextInt();
+                    sc.nextLine();
+                    try {
+                        Pet petSelecionado3 = petEncontrado3.get(numeroPet3 - 1);
+                        repositorio.deletarPet(petSelecionado3, petSelecionado3.getNome());
+                        List<Pet> petsAtualizados = repositorio.carregarPets();
+                        pm.carregarPets(petsAtualizados);
+                        System.out.println("Pet deletado com sucesso!");
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Número inválido, escolha um número da lista!");
+                    }
                     break;
+
+                case 4:
+                    pm.listarPets();
+                    break;
+
+                case 5:
+                    realizarBusca(pm, sc);
+                    break;
+
             }
         } while (opcao != 6);
-
+        System.out.println("Saindo...");
 
     }
+
+    private static List<Pet> realizarBusca(PetManager pm, Scanner sc) {
+        TipoPet tipo2 = null;
+        while (tipo2 == null) {
+            System.out.print("Digite o tipo (Gato 1/Cachorro 2) do pet: ");
+            try {
+                tipo2 = TipoPet.tipoPet(sc.nextInt());
+            } catch (OpcaoInvalidaException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        System.out.println("1 - Nome ou sobrenome");
+        System.out.println("2 - Sexo");
+        System.out.println("3 - Endereço");
+        System.out.println("4 - Idade");
+        System.out.println("5 - Peso");
+        System.out.println("6 - Raça");
+        System.out.println("0 - Nenhuma das opções");
+        System.out.println("Gostaria de adicionar um segundo critério?");
+        System.out.print("Se sim digite a opção: ");
+        int opcaoDeBusca = sc.nextInt();
+        sc.nextLine();
+
+        String nome2 = null;
+        SexoPet sexo2 = null;
+        String endereco2 = null;
+        String idade2 = null;
+        String peso2 = null;
+        String raca2 = null;
+
+        switch (opcaoDeBusca) {
+            case 1:
+                System.out.print("Digite o nome: ");
+                nome2 = sc.nextLine();
+                break;
+            case 2:
+                System.out.print("Digite o sexo (M / F): ");
+                try {
+                    sexo2 = SexoPet.sexoPet(sc.next().charAt(0));
+                } catch (OpcaoInvalidaException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case 3:
+                System.out.print("Digite o endereço: ");
+                endereco2 = sc.nextLine();
+                break;
+            case 4:
+                System.out.print("Digite a idade: ");
+                idade2 = sc.nextLine();
+                break;
+            case 5:
+                System.out.print("Digite o peso: ");
+                peso2 = sc.nextLine();
+                break;
+            case 6:
+                System.out.print("Digite a raça: ");
+                raca2 = sc.nextLine();
+                break;
+        }
+        List<Pet> listaDeBusca = pm.buscarPet(nome2, tipo2, sexo2, endereco2, idade2, peso2, raca2);
+        boolean buscouPorNome = nome2 != null;
+        boolean buscouPorSexo = sexo2 != null;
+        boolean buscouPorEndereco = endereco2 != null;
+        boolean buscouPorIdade = idade2 != null;
+        boolean buscouPorPeso = peso2 != null;
+        boolean buscouPorRaca = raca2 != null;
+        for (int i = 0; i < listaDeBusca.size(); i++) {
+            int soma = 1 + i;
+            String nomeFormatado = buscouPorNome ?
+                    "\033[1m" + listaDeBusca.get(i).getNome() + "\033[0m" : listaDeBusca.get(i).getNome();
+            String sexoFormatado = buscouPorSexo ?
+                    "\033[1m" + listaDeBusca.get(i).getSexo() + "\033[0m" : String.valueOf(listaDeBusca.get(i).getSexo());
+            String enderecoFormatado = buscouPorEndereco ?
+                    "\033[1m" + listaDeBusca.get(i).getEnderecoBairro() + "\033[0m" : listaDeBusca.get(i).getEnderecoBairro();
+            String idadeFormatado = buscouPorIdade ?
+                    "\033[1m" + listaDeBusca.get(i).getIdade() + "\033[0m" : listaDeBusca.get(i).getIdade();
+            String pesoFormatado = buscouPorPeso ?
+                    "\033[1m" + listaDeBusca.get(i).getPeso() + "\033[0m" : listaDeBusca.get(i).getPeso();
+            String racaFormatado = buscouPorRaca ?
+                    "\033[1m" + listaDeBusca.get(i).getRaca() + "\033[0m" : listaDeBusca.get(i).getRaca();
+
+
+            System.out.println(soma + ". "
+                    + nomeFormatado + " - "
+                    + "\033[1m" + listaDeBusca.get(i).getTipo() + "\033[0m" + " - "
+                    + sexoFormatado + " - "
+                    + enderecoFormatado + " - "
+                    + idadeFormatado + " anos" + " - "
+                    + pesoFormatado + "kg" + " - "
+                    + racaFormatado);
+        }
+        return listaDeBusca;
+    }
+
 }
