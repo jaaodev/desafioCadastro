@@ -1,5 +1,9 @@
 # Desafio Cadastro de Pets
 
+![Java](https://img.shields.io/badge/Java-17-blue)
+![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
+![Contributions](https://img.shields.io/badge/Contribuições-Bem%20vindas-orange)
+
 Aplicacao Java em linha de comando para cadastro e gerenciamento de pets resgatados. O projeto foi desenvolvido como solucao para um desafio de programacao com foco em orientacao a objetos, tratamento de excecoes e manipulacao de arquivos.
 
 ## Objetivo
